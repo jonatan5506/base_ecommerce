@@ -1,0 +1,15 @@
+{
+  "Export Default Function": {
+    "prefix": "edf",
+    "body": [
+      "export default function ${1:ComponentName}() {",
+      "  return (",
+      "    <div>",
+      "      ${2}",
+      "    </div>",
+      "  );",
+      "}"
+    ],
+    "description": "Cria export default function para Next.js/React"
+  }
+}
