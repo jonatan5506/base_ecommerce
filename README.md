@@ -59,3 +59,10 @@ OBS: As imagens ficam na no caminho indicado em sample-data.ts
 
 ***Converter obj prisma em obg JS***
 1º criar uma função em lib/utils
+
+***VALIDAÇÃO COM ZOD***
+
+1º Criar arquivo do zod em types/index.ts ficam nosso tipos
+2º Instalar - npm i zod
+3º Criar arquivo lib/validators.ts - onde ficarão as configs do zod
+4º precisamos inferir o zod no arquivo types/index.ts
