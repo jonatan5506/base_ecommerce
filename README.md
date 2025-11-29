@@ -66,3 +66,13 @@ OBS: As imagens ficam na no caminho indicado em sample-data.ts
 2º Instalar - npm i zod
 3º Criar arquivo lib/validators.ts - onde ficarão as configs do zod
 4º precisamos inferir o zod no arquivo types/index.ts
+
+***PACOTES PARA USAR O NEON***
+PULEI ESSA PARTE, AULA 24, SE DER MERDA EU VOLTO AQUI!
+npm i @neondatabase/serverless @prisma/adapter-neon ws
+npm i -D @types/ws bufferutil
+
+***PAGINA DE DETALHES DE PRODUTO***
+npx shadcn@latest add badge
+
+***DEPLOY INICIAL NA VERSEL***

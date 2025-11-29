@@ -13,10 +13,10 @@ export const productSchema = z.object({
   slug: z.string().min(3, 'Slug deve ter no mínimo 3 caracteres').max(255),
   category: z.string().min(3, 'Category deve ter no mínimo 3 caracteres').max(255),
   brand: z.string().min(3, 'Brand deve ter no mínimo 3 caracteres').max(255),
-  Description: z.string().min(3, 'Description deve ter no mínimo 3 caracteres').max(255),
+  description: z.string().min(3, 'Description deve ter no mínimo 3 caracteres').max(255),
   stock: z.coerce.number('Stock deve ser um número'),
   images: z.array(z.string().min(1, 'Deve haver pelo menos uma imagem')),
-  isFeature: z.boolean(),
+  isFeatured: z.boolean(),
   banner: z.string().nullable(),
   price: currency,
 });
