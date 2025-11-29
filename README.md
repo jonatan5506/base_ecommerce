@@ -76,3 +76,4 @@ npm i -D @types/ws bufferutil
 npx shadcn@latest add badge
 
 ***DEPLOY INICIAL NA VERSEL***
+1º Fazer o build localmente para verificar
