@@ -86,4 +86,17 @@ npx shadcn@latest add badge
 3º npx prisma generate
 4º npx prisma migrate dev --name add_user_based_tables
 
-******
+***SEED USERS***
+1º adicionei dois usuários em sample-data
+2º npm i bcrypt-ts-edge
+
+***AUTH SETUP***
+https://next-auth.js.org/configuration/options
+1º npm i next-auth
+2º npm i @auth/prisma-adapter
+3º Gerar o secret - openssl rand -base64 32
+4º Criar variáveis de ambiente com o secret gerado
+* NEXTAUTH_SECRET="DQ5dsLh/KMUUVe2Jq1kri1iIKcBgd3u6fznU3t1aWVU="
+* NEXTAUTH_URL=http://localhost:3000 #Muda em produção
+* NEXTAUTH_URL_INTERNAL=http://localhost:3000
+5º criar arquivo de config /auth.ts

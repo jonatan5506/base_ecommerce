@@ -11,9 +11,17 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
   await prisma.product.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.session.deleteMany();
+  await prisma.verificationToken.deleteMany();
 
   await prisma.product.createMany({
     data: sampleData.products,
+  });
+
+  await prisma.user.createMany({
+    data: sampleData.users,
   });
 
   console.log("Seed criada com sucesso!");
