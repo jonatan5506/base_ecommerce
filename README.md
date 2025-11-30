@@ -77,3 +77,13 @@ npx shadcn@latest add badge
 
 ***DEPLOY INICIAL NA VERSEL***
 1º Fazer o build localmente para verificar
+2º Colocar as variáveis de ambiente na versel
+3ª Após o deploy, mudar nas variáveis de ambiente da versel a base_url, para a url criada pela versel
+
+***AUTENTICAÇÃO COM NEXT***
+1º Documentação - https://authjs.dev/getting-started/adapters/prisma
+2º Criados os 4 modelos necessários no schema.prisma
+3º npx prisma generate
+4º npx prisma migrate dev --name add_user_based_tables
+
+******
