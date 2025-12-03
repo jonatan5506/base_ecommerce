@@ -100,3 +100,7 @@ https://next-auth.js.org/configuration/options
 * NEXTAUTH_URL=http://localhost:3000 #Muda em produção
 * NEXTAUTH_URL_INTERNAL=http://localhost:3000
 5º criar arquivo de config /auth.ts
+
+***SignIn Form***
+1º login: admin@example.com senha: admin123
+2º npx shadcn@latest add label input

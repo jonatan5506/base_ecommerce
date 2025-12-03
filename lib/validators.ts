@@ -20,3 +20,9 @@ export const productSchema = z.object({
   banner: z.string().nullable(),
   price: currency,
 });
+
+//Esquema para signup de usuários
+export const signInFormSchema = z.object({
+  email: z.email('Email inválido'),
+  password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
+});
