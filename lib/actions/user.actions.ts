@@ -5,6 +5,7 @@ import { signIn, signOut } from '@/auth';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { hashSync } from 'bcrypt-ts-edge';
 import { prisma } from '../prisma';
+import { formatErrors } from '../utils';
 
 export async function signInWithCredentials(
   prevState: unknown,
@@ -65,11 +66,11 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
     });
 
     return { success: true, message: 'Usuário criado com sucesso' };
-  } catch (error) {
+  } catch (error) {    
     if (isRedirectError(error)) throw error;
 
     console.error(error);
-    return { success: false, message: 'Usuário não foi criado!' };
+    return { success: false, message: formatErrors(error) };//Erros tratados
   }
 }
 
