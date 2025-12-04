@@ -7,20 +7,20 @@ import { sigUpDefaultValues } from '@/lib/constants';
 import Link from 'next/link';
 import { useActionState } from 'react'; //Gerencia o estado de ações do servidor
 import { useFormStatus } from 'react-dom'; //Fornece o status atual do formulário
-import { signInWithCredentials } from '@/lib/actions/user.actions';
+import { signUpUser } from '@/lib/actions/user.actions';
 
-const CredentialsSignInForm = () => {
+const CredentialsSignUpForm = () => {
   
-  const [data, action] = useActionState(signInWithCredentials, {
+  const [data, action] = useActionState(signUpUser, {
     success: false,
     message: '',
   });
 
-  const SignInButton = () => {
+  const SignUpButton = () => {
     const { pending } = useFormStatus();
     return (
       <Button className="w-auto px-6" variant="default" disabled={pending}>
-        {pending ? 'Aguarde...' : 'Sign In'}
+        {pending ? 'Enviando...' : 'Cadastre-se'}
       </Button>
     );
   };
@@ -31,10 +31,22 @@ const CredentialsSignInForm = () => {
     <form action={action}>
       <div className="space-y-6">
         <div>
+          <Label htmlFor="name">Nome</Label>
+          <Input
+            id="name"
+            placeholder='Informe seu nome completo'
+            name="name"
+            type="text"
+            required
+            autoComplete="name"
+            defaultValue={sigUpDefaultValues.name}
+          />
+        </div>
+        <div>
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
-            placeholder='Informe seu email'
+            placeholder='exemplo@email.com'
             name="email"
             type="email"
             required
@@ -46,16 +58,28 @@ const CredentialsSignInForm = () => {
           <Label htmlFor="password">Senha</Label>
           <Input
             id="password"
-            name="password"
             placeholder='Informe sua senha'
+            name="password"
             type="password"
             required
             autoComplete="password"
             defaultValue={sigUpDefaultValues.password}
           />
         </div>
+        <div>
+          <Label htmlFor="password">Confirme sua senha</Label>
+          <Input
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder='confirme sua senha'
+            type="password"
+            required
+            autoComplete="confirmPassword"
+            defaultValue={sigUpDefaultValues.confirmPassword}
+          />
+        </div>
         <div className="flex justify-center">
-          <SignInButton />
+          <SignUpButton />
         </div>
 
         {/* Mensagem de erro para credenciais incorretas */}
@@ -64,9 +88,9 @@ const CredentialsSignInForm = () => {
         )}
 
         <div className="text-sm text-center text-muted-foreground">
-          Não possui uma conta?{' '}
-          <Link href="/sign-up" className="text-primary hover:underline">
-            Cadastre-se
+          Já possui uma conta?{' '}
+          <Link href="/sing-in" className="text-primary hover:underline">
+            Sign In
           </Link>
         </div>
       </div>
@@ -74,4 +98,4 @@ const CredentialsSignInForm = () => {
   );
 };
 
-export default CredentialsSignInForm;
+export default CredentialsSignUpForm;

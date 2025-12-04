@@ -21,8 +21,19 @@ export const productSchema = z.object({
   price: currency,
 });
 
-//Esquema para signup de usuários
+//Esquema para signing de usuários
 export const signInFormSchema = z.object({
   email: z.email('Email inválido'),
   password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
+});
+
+//Esquema para signup de usuários
+export const signUpFormSchema = z.object({
+  name: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres'), 
+  email: z.email('Email inválido'),
+  password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
+  confirmPassword: z.string().min(6, 'Confirme a senha deve ter no mínimo 6 caracteres')
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'As senhas não conferem',
+  path: ['confirmPassword'],
 });

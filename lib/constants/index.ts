@@ -6,7 +6,15 @@ export const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhos
 export const LATEST_PRODUCTS_LIMIT = parseInt(process.env.LATEST_PRODUCTS_LIMIT || "4", 10);
 
 //SigInForm
-export const siginDefaultValues = {
+export const sigInDefaultValues = {
     email: '',
     password: ''
+};
+
+//SigUpForm
+export const sigUpDefaultValues = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
 };

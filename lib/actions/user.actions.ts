@@ -1,10 +1,15 @@
 'use server';
 
-import { signInFormSchema } from '../validators';
+import { signInFormSchema, signUpFormSchema } from '../validators';
 import { signIn, signOut } from '@/auth';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
+import { hashSync } from 'bcrypt-ts-edge';
+import { prisma } from '../prisma';
 
-export async function signInWithCredentials(prevState: unknown, formData: FormData) {
+export async function signInWithCredentials(
+  prevState: unknown,
+  formData: FormData,
+) {
   try {
     const parsed = signInFormSchema.parse({
       email: formData.get('email') ?? '',
@@ -18,7 +23,6 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
     });
 
     return { success: true, message: 'Usuário autenticado com sucesso' };
-
   } catch (error) {
     if (isRedirectError(error)) throw error;
 
@@ -29,7 +33,44 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
 
 // SignOut action
 export async function signOutUser() {
-    await signOut();
+  await signOut();
+}
+
+//SigUp user
+export async function signUpUser(prevState: unknown, formData: FormData) {
+  try {
+    const user = signUpFormSchema.parse({
+      name: formData.get('name'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+      confirmPassword: formData.get('confirmPassword'),
+    });
+
+    //salva a senha antes do hash
+    const plainPassword = user.password;
+
+    user.password = hashSync(user.password, 10);
+
+    await prisma.user.create({
+      data: {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+      },
+    });
+
+    await signIn('credentials', {
+      email: user.email,
+      password: plainPassword,
+    });
+
+    return { success: true, message: 'Usuário criado com sucesso' };
+  } catch (error) {
+    if (isRedirectError(error)) throw error;
+
+    console.error(error);
+    return { success: false, message: 'Usuário não foi criado!' };
+  }
 }
 
 //v1
@@ -47,7 +88,7 @@ export async function signOutUser() {
 //             email: formData.get('email'),
 //             password: formData.get('password'),
 //         });
-//         await signIn('credentials', user);  
+//         await signIn('credentials', user);
 //         return { success: true, message: 'Usuário autenticado com sucesso' };
 //     } catch (error) {
 //         if (isRedirectError(error)) {
