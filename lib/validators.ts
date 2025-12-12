@@ -37,3 +37,25 @@ export const signUpFormSchema = z.object({
   message: 'As senhas não conferem',
   path: ['confirmPassword'],
 });
+
+//Esquema de validação do carrinho
+export const cartItemSchema = z.object({
+  productId: z.string().min(1,'O prudto é obrigatório'),
+  name: z.string().min(1,'O nome é obrigatório'),
+  slug: z.string().min(1,'O slug é obrigatório'),
+  qty: z.number().int().nonnegative('A quantidade deve ser um número positivo'),
+  image: z.string().min(1,'A imagem é obrigatória'),
+  price: currency,
+});
+
+//Esquema de validação do carrinho
+export const insertCartSchema = z.object({
+  items: z.array(cartItemSchema),
+  itemsPrice: currency,
+  totalPrice: currency,
+  shippingPrice: currency,
+  taxPrice: currency,
+  sessionCartId: z.string().min(1,'O ID do carrinho é obrigatório'),
+  userId: z.string().optional().nullable(),
+})
+  

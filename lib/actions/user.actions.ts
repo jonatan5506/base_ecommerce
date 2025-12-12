@@ -34,7 +34,7 @@ export async function signInWithCredentials(
 
 // SignOut action
 export async function signOutUser() {
-  await signOut();
+  await signOut({ redirectTo: '/' });
 }
 
 //SigUp user
