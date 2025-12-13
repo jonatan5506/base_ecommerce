@@ -3,35 +3,23 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/lib/prisma';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { compareSync } from 'bcrypt-ts-edge';
-import type { NextAuthConfig } from 'next-auth';
+import { authConfig } from './auth.config';
 
-export const authOptions: NextAuthConfig = {
-  pages: {
-    signIn: '/sign-in',
-    error: '/sign-in',
-  },
-
-  session: {
-    strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60,
-  },
-
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
-
   providers: [
     CredentialsProvider({
       name: 'Credentials',
-
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string},
+          where: { email: credentials.email as string },
         });
 
         if (!user || !user.password) return null;
@@ -52,8 +40,8 @@ export const authOptions: NextAuthConfig = {
       },
     }),
   ],
-
   callbacks: {
+    ...authConfig.callbacks,
     async session({ session, user, trigger, token }: any) {
       // Set the user ID from the token
       session.user.id = token.sub;
@@ -87,6 +75,4 @@ export const authOptions: NextAuthConfig = {
       return token;
     },
   },
-};
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
+});
