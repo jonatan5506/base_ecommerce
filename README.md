@@ -1,6 +1,6 @@
 # Base Ecommerce
 
-![Project Preview](/images/home-preview.png)
+![Project Preview](public/images/home-preview.png)
 
 Este projeto é uma plataforma de e-commerce base desenvolvida com as tecnologias mais modernas do ecossistema React e Next.js. O objetivo é fornecer uma estrutura robusta, performática e escalável para lojas virtuais, incluindo autenticação, gerenciamento de carrinho, banco de dados e UI responsiva.
 
