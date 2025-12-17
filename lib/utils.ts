@@ -19,7 +19,7 @@ export function formatNumberToDecimal(num: number): string {
 }
 
 //Formata Erros SignUp
-export function formatErrors(error: unknown): string {
+export function formatError(error: unknown): string {
 
   // ✅ ZOD v4+
   if (error instanceof ZodError) {
@@ -40,5 +40,17 @@ export function formatErrors(error: unknown): string {
 
   // ✅ fallback
   return 'Erro inesperado ao processar sua solicitação.';
+}
+
+// Arredonda para duas casas decimais
+export function roundToTwo(value: number | string) {
+  try {
+    if (typeof value === 'number') {
+      return Math.round((value + Number.EPSILON) * 100) / 100;
+    }
+    return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
+  } catch (error) {
+    throw new Error('O valor deve ser um número ou string');
+  }
 }
 

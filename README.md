@@ -1,106 +1,120 @@
-# Instalação - npx create-react-app@latest
+# Base Ecommerce
 
-# ERRO IMPORTAÇÃO CSS
-* criar arquivo css.d.ts com o conteudo
-// Adiciona a declaração de módulo para arquivos CSS
-declare module '*.css';
+Este projeto é uma plataforma de e-commerce base desenvolvida com as tecnologias mais modernas do ecossistema React e Next.js. O objetivo é fornecer uma estrutura robusta, performática e escalável para lojas virtuais, incluindo autenticação, gerenciamento de carrinho, banco de dados e UI responsiva.
 
-## CRIAR FAVICON DO CLIENTE
+## 🚀 Tecnologias Utilizadas
 
-## IMAGENS ESTÃO NO PUBLIC, SEPARA POR:
-    * BANNER
-    * LOGO
-    * PROMO
-    * SAMPLE-PRODUCTS
+O projeto utiliza uma stack atualizada e focada em performance e experiência do desenvolvedor:
 
-## npm i lucide-react
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Directory)
+- **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
+- **UI & Estilização:**
+  - [Tailwind CSS](https://tailwindcss.com/)
+  - [Shadcn UI](https://ui.shadcn.com/)
+  - [Lucide React](https://lucide.dev/) (Ícones)
+- **Banco de Dados & ORM:**
+  - [PostgreSQL](https://www.postgresql.org/) (via [Neon Database](https://neon.tech/))
+  - [Prisma ORM](https://www.prisma.io/)
+- **Autenticação:** [NextAuth.js (v5 Beta)](https://authjs.dev/)
+- **Validação:** [Zod](https://zod.dev/)
+- **Utilitários:** `clsx`, `tailwind-merge`
 
-## Instalar themes - npm i next-themes
-## Intalar menu Shadcn - npx shadcn@latest add dropdown-menu
-## Intalar sheet Shadcn - npx shadcn@latest add sheet
+## 📋 Pré-requisitos
 
-## Componente do cartão **IMPORTANTE**
-* npx shadcn@latest add card
+Antes de começar, certifique-se de ter instalado em sua máquina:
 
+- [Node.js](https://nodejs.org/) (versão 20 ou superior recomendada)
+- [npm](https://www.npmjs.com/) ou gerenciador de pacotes equivalente
+- Conta no [Neon](https://neon.tech/) (para o banco de dados PostgreSQL)
 
-                                                        ***BANCO DE DADOS***
+## 🛠️ Instalação e Configuração
 
-* PostgreSql Neon
+Siga os passos abaixo para configurar o projeto localmente:
 
+1. **Clone o repositório:**
 
-***PRISMA ORM***
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd base-ecommerce
+   ```
 
-1º Instalar prisma no projeto - npm i -D prisma
-2º inicializar - npx prisma init
-3º A pasta prisma/schema.prisma é criada e nela crio os modelos
-4º Trocar a Base_url criada, pela base do Neon
-5ª criar modelos em prisma/schema.prisma
-6º Gerar o Generated Prisma Client - npx prisma generate
-7º Iniciar migrations - npx prisma migrate dev --name init # O "Init" é o nome da migração
-8º Rodar o  prisma studio para ver se a migration subiu - npx prisma studio
-9º npx prisma db push
-10º rodar npx prisma studio
-11º criar dentro de lib/prisma.ts
-12º npm i @prisma/adapter-pg
+2. **Instale as dependências:**
 
+   ```bash
+   npm install
+   ```
 
-***SEED***
+3. **Configuração de Variáveis de Ambiente:**
+   Crie um arquivo `.env` na raiz do projeto e configure as variáveis necessárias (baseado no `.env.example` se houver, ou nas configurações do Prisma e Auth). Exemplos comuns:
 
-1º Criar arquivo seed.ts ma pasta db
-OBS: tive que instalar : npm install @prisma/adapter-pg
-2º Executa a seed manualmente - npx tsx ./db/seed
+   ```env
+   DATABASE_URL="postgresql://user:password@host/db?sslmode=require"
+   NEXTAUTH_SECRET="seu-segredo-gerado-com-openssl" # gere com: openssl rand -base64 32
+   NEXTAUTH_URL="http://localhost:3000"
+   ```
 
-OBS: As imagens ficam na no caminho indicado em sample-data.ts
+4. **Configuração do Banco de Dados (Prisma):**
 
-***SERVER ACTIONS*** funciona como api
+   Gere o cliente do Prisma:
 
-1º criar arquivo /lib/actions/model.action.ts
+   ```bash
+   npx prisma generate
+   ```
 
+   Realize a migração inicial para criar as tabelas:
 
-***Converter obj prisma em obg JS***
-1º criar uma função em lib/utils
+   ```bash
+   npx prisma migrate dev --name init
+   ```
 
-***VALIDAÇÃO COM ZOD***
+   (Opcional) Envie o schema diretamente se não estiver usando migrações:
 
-1º Criar arquivo do zod em types/index.ts ficam nosso tipos
-2º Instalar - npm i zod
-3º Criar arquivo lib/validators.ts - onde ficarão as configs do zod
-4º precisamos inferir o zod no arquivo types/index.ts
+   ```bash
+   npx prisma db push
+   ```
 
-***PACOTES PARA USAR O NEON***
-PULEI ESSA PARTE, AULA 24, SE DER MERDA EU VOLTO AQUI!
-npm i @neondatabase/serverless @prisma/adapter-neon ws
-npm i -D @types/ws bufferutil
+5. **Popular o Banco de Dados (Seed):**
+   Para inserir dados iniciais de teste (produtos, usuários de exemplo):
+   ```bash
+   npx tsx ./db/seed
+   ```
 
-***PAGINA DE DETALHES DE PRODUTO***
-npx shadcn@latest add badge
+## ▶️ Executando o Projeto
 
-***DEPLOY INICIAL NA VERSEL***
-1º Fazer o build localmente para verificar
-2º Colocar as variáveis de ambiente na versel
-3ª Após o deploy, mudar nas variáveis de ambiente da versel a base_url, para a url criada pela versel
+Para iniciar o servidor de desenvolvimento:
 
-***AUTENTICAÇÃO COM NEXT***
-1º Documentação - https://authjs.dev/getting-started/adapters/prisma
-2º Criados os 4 modelos necessários no schema.prisma
-3º npx prisma generate
-4º npx prisma migrate dev --name add_user_based_tables
+```bash
+npm run dev
+```
 
-***SEED USERS***
-1º adicionei dois usuários em sample-data
-2º npm i bcrypt-ts-edge
+O projeto estará acessível em [http://localhost:3000](http://localhost:3000).
 
-***AUTH SETUP***
-https://next-auth.js.org/configuration/options
-1º npm i next-auth
-2º npm i @auth/prisma-adapter
-3º Gerar o secret - openssl rand -base64 32
-4º Criar variáveis de ambiente com o secret gerado
-* NEXTAUTH_SECRET="DQ5dsLh/KMUUVe2Jq1kri1iIKcBgd3u6fznU3t1aWVU="
-* NEXTAUTH_URL=http://localhost:3000 #Muda em produção
-* NEXTAUTH_URL_INTERNAL=http://localhost:3000
-5º criar arquivo de config /auth.ts
+## 📂 Estrutura do Projeto
 
-***SignIn Form***
-1º login: admin@example.com senha: admin123
-2º npx shadcn@latest add label input
+- `/app`: Páginas e rotas da aplicação (Next.js App Router).
+- `/components`: Componentes reutilizáveis da UI (Botões, Inputs, Cards, etc.).
+- `/db`: Scripts de seed e configurações de banco.
+- `/lib`: Funções utilitárias, actions do servidor, verificadores e constantes.
+- `/prisma`: Schema do banco de dados (modelos User, Product, Cart, etc.).
+- `/public`: Arquivos estáticos (imagens, favicons).
+- `/types`: Definições de tipos TypeScript globais ou compartilhados.
+
+## ✨ Funcionalidades Principais
+
+- **Catálogo de Produtos:** Listagem dinâmica com banco de dados.
+- **Carrinho de Compras:** Gerenciamento de itens, cálculo de subtotal.
+- **Autenticação:** Login, Registro e Sessão de usuários.
+- **Admin/Seed:** Scripts para popular o banco de dados com dados de teste.
+- **Design Responsivo:** Adaptado para mobile e desktop com temas (Dark/Light mode).
+
+## 📝 Scripts Disponíveis
+
+- `npm run dev`: Inicia o ambiente de desenvolvimento.
+- `npm run build`: Cria a build de produção.
+- `npm run start`: Inicia o servidor de produção.
+- `npm run lint`: Executa a verificação de lint (ESLint).
+- `npx prisma studio`: Abre interface visual para gerenciar o banco de dados.
+
+---
+
+Desenvolvido como parte do projeto de Ecommerce Base.
